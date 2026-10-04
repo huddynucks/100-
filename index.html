@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outfit Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #111;
+    }
+    header {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+    header p {
+      margin-top: 10px;
+      color: #ccc;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    button {
+      background: #111;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 12px;
+      font-size: 17px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #333;
+    }
+    #outfit {
+      margin-top: 30px;
+      font-size: 20px;
+      line-height: 1.7;
+    }
+    .item {
+      background: #f1f1f1;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Outfit Generator</h1>
+    <p>Find your next outfit in seconds.</p>
+  </header>
+  <div class="container">
+    <div class="card">
+  <h2>Generate an Outfit</h2>
+  <p>Click the button to get a random outfit.</p>
+  <button onclick="generateOutfit()">Generate Outfit</button>
+  <div id="outfit"></div>
+</div>
+  </div>
+  <script>
+    const tops = [
+      "Black hoodie",
+      "White oversized tee",
+      "Grey quarter-zip",
+      "Navy sweatshirt",
+      "Cream hoodie",
+      "Black zip-up"
+    ];
+    const bottoms = [
+      "Baggy black pants",
+      "Grey sweatpants",
+      "Light blue jeans",
+      "Dark blue jeans",
+      "Khaki pants",
+      "Black cargos"
+    ];
+    const shoes = [
+      "White sneakers",
+      "Nike P-6000s",
+      "Black sneakers",
+      "Air Force 1s",
+      "Grey sneakers",
+      "Yeezy-style sneakers"
+    ];
+    function randomItem(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+    function generateOutfit() {
+      const top = randomItem(tops);
+      const bottom = randomItem(bottoms);
+      const shoe = randomItem(shoes);
+      document.getElementById("outfit").innerHTML = `
+        <div class="item">👕 <strong>Top:</strong> ${top}</div>
+        <div class="item">👖 <strong>Bottom:</strong> ${bottom}</div>
+        <div class="item">👟 <strong>Shoes:</strong> ${shoe}</div>
+      `;
+    }
+  </script>
+</body>
+</html>
