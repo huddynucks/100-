@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DailyFit</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #080a0d;
+  --card: #12161b;
+  --card2: #1a2027;
+  --text: #f5f7fa;
+  --muted: #9aa5b1;
+  --line: #29313a;
+  --green: #8cff9b;
+  --blue: #66d9ff;
+  --gold: #ffd76a;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  width: min(1100px, 100%);
+  margin: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.logo span {
+  color: var(--green);
+}
+
+.pro-badge {
+  background: linear-gradient(135deg, #ffd76a, #ffb84d);
+  color: #171006;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 12px;
+}
+
+.hero {
+  padding: 25px 0 35px;
+}
+
+.hero h1 {
+  font-size: clamp(40px, 8vw, 72px);
+  line-height: .95;
+  margin: 0 0 16px;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 650px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+@media(max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 700;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--card2);
+  color: var(--text);
+  font-size: 16px;
+}
+
+button {
+  border: 0;
+  border-radius: 14px;
+  padding: 15px 20px;
+  background: var(--green);
+  color: #061007;
+  font-weight: 900;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: .9;
+}
+
+.generate {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.weather {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media(max-width: 650px) {
+  .weather {
+    grid-template-columns: 1fr;
+  }
+}
+
+.weatherBox {
+  background: var(--card2);
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.weatherNumber {
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.resultGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+@media(max-width: 700px) {
+  .resultGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.result {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 22px;
+}
+
+.result h3 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--card2);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.item {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+.tip {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.price {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.hidden {
+  display: none;
+}
+
+/* PREMIUM */
+
+.premium {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #80652b;
+  background:
+    radial-gradient(circle at top right, rgba(255,215,106,.16), transparent 35%),
+    var(--card);
+}
+
+.premium h2 {
+  font-size: 34px;
+  margin: 5px 0 10px;
+}
+
+.premium-subtitle {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.premium-price {
+  font-size: 46px;
+  font-weight: 900;
+  margin: 20px 0;
+}
+
+.premium-price span {
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+@media(max-width: 650px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feature {
+  background: var(--card2);
+  padding: 14px;
+  border-radius: 12px;
+}
+
+.feature span {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.upgrade {
+  width: 100%;
+  background: linear-gradient(135deg, #ffd76a, #ffb84d);
+  color: #171006;
+  font-size: 18px;
+}
+
+.premium-section {
+  margin-top: 30px;
+}
+
+.locked {
+  position: relative;
+  overflow: hidden;
+}
+
+.locked-content {
+  filter: blur(4px);
+  opacity: .45;
+}
+
+.lock-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(8,10,13,.55);
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+@media(max-width: 800px) {
+  .days {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.day {
+  background: var(--card2);
+  border-radius: 14px;
+  padding: 15px;
+  text-align: center;
+}
+
+.day strong {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.day-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.error {
+  color: #ff8585;
+  margin-top: 12px;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 35px 0;
+  font-size: 13px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card2);
+  border: 1px solid var(--line);
+  padding: 15px 20px;
+  border-radius: 14px;
+  display: none;
+  z-index: 10;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+<div class="container">
+
+<header>
+  <div class="logo">Daily<span>Fit</span></div>
+  <div class="pro-badge">PRO AVAILABLE</div>
+</header>
+
+<section class="hero">
+  <h1>Dress smarter.<br>Every day.</h1>
+  <p>
+    Personalized outfits, weather planning, shoes and simple
+    self-care recommendations built around you.
+  </p>
+</section>
+
+<section class="card">
+<h2>Your Profile</h2>
+
+<div class="grid">
+
+<div>
+<label>📍 Location</label>
+<input id="location" placeholder="Example: Davison, Michigan">
+</div>
+
+<div>
+<label>🎂 Age</label>
+<input id="age" type="number" min="13" max="100">
+</div>
+
+<div>
+<label>👤 Gender / style</label>
+<select id="gender">
+<option value="any">Choose</option>
+<option value="male">Male</option>
+<option value="female">Female</option>
+<option value="neutral">Gender-neutral</option>
+</select>
+</div>
+
+<div>
+<label>👕 Style</label>
+<select id="style">
+<option value="streetwear">Streetwear</option>
+<option value="casual">Casual</option>
+<option value="athletic">Athletic</option>
+<option value="minimal">Minimal</option>
+<option value="preppy">Preppy</option>
+</select>
+</div>
+
+<div>
+<label>💰 Clothing budget</label>
+<select id="clothingBudget">
+<option>Under $50</option>
+<option>$50–$150</option>
+<option>$150–$300</option>
+<option>$300+</option>
+</select>
+</div>
+
+<div>
+<label>👟 Shoe budget</label>
+<select id="shoeBudget">
+<option value="low">Under $75</option>
+<option value="mid">$75–$150</option>
+<option value="high">$150–$250</option>
+<option value="luxury">$250+</option>
+</select>
+</div>
+
+<div>
+<label>🧴 Skincare budget</label>
+<select id="skinBudget">
+<option value="low">Under $25</option>
+<option value="mid">$25–$50</option>
+<option value="high">$50–$100</option>
+<option value="luxury">$100+</option>
+</select>
+</div>
+
+<div>
+<label>🧴 Skin type</label>
+<select id="skinType">
+<option value="sensitive">Sensitive</option>
+<option value="normal">Normal</option>
+<option value="dry">Dry</option>
+<option value="oily">Oily</option>
+<option value="combination">Combination</option>
+</select>
+</div>
+
+</div>
+
+<button class="generate" onclick="generatePlan()">
+Generate My Day →
+</button>
+
+<div id="error" class="error"></div>
+</section>
+
+<section class="card premium">
+
+<div class="pro-badge">DAILYFIT PRO</div>
+
+<h2>Unlock your full style system.</h2>
+
+<p class="premium-subtitle">
+Go beyond one outfit. Build your entire week around your weather,
+style and budget.
+</p>
+
+<div class="premium-price">
+$4.99 <span>/ month</span>
+</div>
+
+<div class="features">
+
+<div class="feature"><span>✓</span> Unlimited outfit generations</div>
+<div class="feature"><span>✓</span> 7-day outfit planner</div>
+<div class="feature"><span>✓</span> Weather-powered planning</div>
+<div class="feature"><span>✓</span> Personalized shoe picks</div>
+<div class="feature"><span>✓</span> Save favorite outfits</div>
+<div class="feature"><span>✓</span> Advanced style profiles</div>
+<div class="feature"><span>✓</span> Smart shopping suggestions</div>
+<div class="feature"><span>✓</span> Advanced skincare planning</div>
+
+</div>
+
+<button class="upgrade" onclick="showPremiumMessage()">
+⭐ Unlock DailyFit Pro
+</button>
+
+</section>
+
+<section id="results" class="hidden">
+
+<div class="card">
+<h2>Today's Weather</h2>
+
+<div class="weather">
+
+<div class="weatherBox">
+<div class="muted">Temperature</div>
+<div id="temperature" class="weatherNumber">--</div>
+</div>
+
+<div class="weatherBox">
+<div class="muted">Conditions</div>
+<div id="conditions" class="weatherNumber">--</div>
+</div>
+
+<div class="weatherBox">
+<div class="muted">Rain chance</div>
+<div id="rain" class="weatherNumber">--</div>
+</div>
+
+</div>
+</div>
+
+<div class="resultGrid">
+
+<div class="result">
+<span class="badge">TODAY'S OUTFIT</span>
+<h3 id="outfitTitle">Your outfit</h3>
+
+<div class="item">
+<strong>Top</strong>
+<div id="top" class="tip"></div>
+</div>
+
+<div class="item">
+<strong>Bottom</strong>
+<div id="bottom" class="tip"></div>
+</div>
+
+<div class="item">
+<strong>Layer</strong>
+<div id="layer" class="tip"></div>
+</div>
+
+<div class="item">
+<strong>Why</strong>
+<div id="outfitReason" class="tip"></div>
+</div>
+
+</div>
+
+<div class="result">
+<span class="badge">SHOES</span>
+<h3>Recommended shoes</h3>
+
+<div class="item">
+<strong>Pick</strong>
+<div id="shoe" class="tip"></div>
+</div>
+
+<div class="item">
+<strong>Color</strong>
+<div id="shoeColor" class="tip"></div>
+</div>
+
+<div class="item">
+<strong>Budget</strong>
+<div id="shoePrice" class="price"></div>
+</div>
+
+</div>
+
+<div class="result">
+<span class="badge">SKINCARE</span>
+<h3>Simple routine</h3>
+
+<div class="item">
+<strong>Morning</strong>
+<div id="morningSkin" class="tip"></div>
+</div>
+
+<div class="item">
+<strong>Night</strong>
+<div id="nightSkin" class="tip"></div>
+</div>
+
+<div class="item">
+<strong>Budget strategy</strong>
+<div id="skinPrice" class="tip"></div>
+</div>
+
+</div>
+
+<div class="result">
+<span class="badge">DAILY TIP</span>
+<h3>Your recommendation</h3>
+<div id="dailyTip" class="tip"></div>
+</div>
+
+</div>
+
+</section>
+
+<section class="premium-section">
+
+<div class="card locked">
+
+<div class="locked-content">
+
+<h2>📅 Your 7-Day Style Calendar</h2>
+
+<div class="days">
+
+<div class="day">
+<strong>MON</strong>
+<div class="day-icon">👕</div>
+Casual
+</div>
+
+<div class="day">
+<strong>TUE</strong>
+<div class="day-icon">👟</div>
+Athletic
+</div>
+
+<div class="day">
+<strong>WED</strong>
+<div class="day-icon">🧥</div>
+Layered
+</div>
+
+<div class="day">
+<strong>THU</strong>
+<div class="day-icon">👖</div>
+Minimal
+</div>
+
+<div class="day">
+<strong>FRI</strong>
+<div class="day-icon">🔥</div>
+Streetwear
+</div>
+
+<div class="day">
+<strong>SAT</strong>
+<div class="day-icon">☀️</div>
+Weekend
+</div>
+
+<div class="day">
+<strong>SUN</strong>
+<div class="day-icon">✨</div>
+Relaxed
+</div>
+
+</div>
+
+</div>
+
+<div class="lock-overlay">
+🔒 Available with DailyFit Pro
+</div>
+
+</div>
+
+</section>
+
+<footer>
+DailyFit • Your daily personal style planner
+</footer>
+
+</div>
+</div>
+
+<div id="toast" class="toast">
+Premium checkout will be connected next.
+</div>
+
+<script>
+
+async function getCoordinates(location) {
+
+const url =
+"https://geocoding-api.open-meteo.com/v1/search?name=" +
+encodeURIComponent(location) +
+"&count=1&language=en&format=json";
+
+const response = await fetch(url);
+
+if (!response.ok) {
+throw new Error("Could not find that location.");
+}
+
+const data = await response.json();
+
+if (!data.results || !data.results.length) {
+throw new Error("Location not found. Try city and state.");
+}
+
+return data.results[0];
+}
+
+async function getWeather(lat, lon) {
+
+const url =
+"https://api.open-meteo.com/v1/forecast" +
+"?latitude=" + lat +
+"&longitude=" + lon +
+"&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,weather_code,wind_speed_10m" +
+"&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code" +
+"&temperature_unit=fahrenheit" +
+"&wind_speed_unit=mph" +
+"&timezone=auto";
+
+const response = await fetch(url);
+
+if (!response.ok) {
+throw new Error("Weather service unavailable.");
+}
+
+return await response.json();
+}
+
+function weatherDescription(code) {
+
+if (code === 0) return "Clear";
+if ([1,2,3].includes(code)) return "Cloudy";
+if ([45,48].includes(code)) return "Foggy";
+if ([51,53,55,56,57].includes(code)) return "Drizzle";
+if ([61,63,65,66,67].includes(code)) return "Rain";
+if ([71,73,75,77].includes(code)) return "Snow";
+if ([80,81,82].includes(code)) return "Showers";
+if ([95,96,99].includes(code)) return "Storms";
+
+return "Mixed";
+}
+
+function chooseOutfit(temp, rain, style) {
+
+let top;
+let bottom;
+let layer;
+
+if (temp < 35) {
+top = "Warm long-sleeve shirt or thermal";
+bottom = "Full-length pants";
+layer = "Insulated jacket or winter coat";
+}
+
+else if (temp < 50) {
+top = "Long-sleeve tee or hoodie";
+bottom = "Jeans, cargos or relaxed pants";
+layer = "Light jacket";
+}
+
+else if (temp < 65) {
+top = "T-shirt or lightweight long sleeve";
+bottom = "Jeans, cargos or casual pants";
+layer = "Light overshirt or zip-up";
+}
+
+else if (temp < 78) {
+top = "Breathable T-shirt";
+bottom = "Jeans, cargos or shorts";
+layer = "Optional lightweight layer";
+}
+
+else {
+top = "Lightweight breathable shirt";
+bottom = "Shorts or lightweight pants";
+layer = "No heavy layer";
+}
+
+if (rain >= 40) {
+layer = "Water-resistant jacket or shell";
+}
+
+if (style === "athletic") {
+top = temp > 65 ? "Performance tee" : "Performance long sleeve";
+bottom = temp > 65 ? "Athletic shorts" : "Tapered athletic pants";
+}
+
+if (style === "preppy") {
+top = temp > 65 ? "Polo or clean tee" : "Oxford or knit layer";
+}
+
+if (style === "minimal") {
+top = "Clean neutral tee or knit";
+bottom = temp > 65 ? "Neutral shorts or straight pants" : "Straight-leg pants";
+}
+
+return {top,bottom,layer};
+}
+
+function chooseShoes(temp,rain,budget) {
+
+if (rain >= 50) {
+return {
+shoe:"Water-resistant sneaker or casual boot",
+color:"Black, grey or another easy-to-clean neutral",
+price:budget==="low" ? "Under $75" : "Within your selected budget"
+};
+}
+
+if (temp >= 65) {
+return {
+shoe:"Clean everyday sneaker",
+color:"White, grey or black",
+price:budget==="low" ? "Under $75" : "Within your selected budget"
+};
+}
+
+return {
+shoe:"Everyday sneaker or casual low-top",
+color:"White, grey, black or navy",
+price:budget==="low" ? "Under $75" : "Within your selected budget"
+};
+}
+
+function skincareRoutine(type,budget) {
+
+let morning;
+let night;
+
+if(type==="sensitive"){
+morning="Gentle cleanser if needed → fragrance-free moisturizer → broad-spectrum SPF 30+";
+night="Gentle cleanser → fragrance-free moisturizer";
+}
+
+else if(type==="dry"){
+morning="Gentle cleanser → moisturizer → broad-spectrum SPF 30+";
+night="Gentle cleanser → richer moisturizer";
+}
+
+else if(type==="oily"){
+morning="Gentle cleanser → lightweight moisturizer → broad-spectrum SPF 30+";
+night="Gentle cleanser → lightweight moisturizer";
+}
+
+else{
+morning="Gentle cleanser → moisturizer → broad-spectrum SPF 30+";
+night="Gentle cleanser → moisturizer";
+}
+
+let budgetText;
+
+if(budget==="low"){
+budgetText="Prioritize cleanser, moisturizer and sunscreen instead of buying lots of products.";
+}
+
+else{
+budgetText="A higher budget does not automatically mean better results. Choose products your skin tolerates well.";
+}
+
+return {morning,night,budgetText};
+}
+
+function dailyTip(temp,rain,wind){
+
+if(rain>=50){
+return "Rain is likely, so prioritize a water-resistant outer layer and shoes that can handle wet conditions.";
+}
+
+if(wind>=20){
+return "It is windy today. A lightweight wind-resistant layer will make the outfit more comfortable.";
+}
+
+if(temp>=80){
+return "Warm day: choose breathable clothing and remember sun protection.";
+}
+
+if(temp<=35){
+return "Cold day: use layers so you can adjust throughout the day.";
+}
+
+return "Moderate conditions today. A clean, flexible everyday outfit should work well.";
+}
+
+async function generatePlan(){
+
+const location =
+document.getElementById("location").value.trim();
+
+const age =
+Number(document.getElementById("age").value);
+
+const style =
+document.getElementById("style").value;
+
+const shoeBudget =
+document.getElementById("shoeBudget").value;
+
+const skinBudget =
+document.getElementById("skinBudget").value;
+
+const skinType =
+document.getElementById("skinType").value;
+
+const error =
+document.getElementById("error");
+
+error.textContent="";
+
+if(!location){
+error.textContent="Enter your city and state.";
+return;
+}
+
+if(!age || age<13){
+error.textContent="Enter your age.";
+return;
+}
+
+try{
+
+const place =
+await getCoordinates(location);
+
+const weather =
+await getWeather(
+place.latitude,
+place.longitude
+);
+
+const current =
+weather.current;
+
+const daily =
+weather.daily;
+
+const temp =
+Math.round(current.temperature_2m);
+
+const rain =
+daily.precipitation_probability_max[0];
+
+document.getElementById("temperature")
+.textContent=temp+"°F";
+
+document.getElementById("conditions")
+.textContent=
+weatherDescription(daily.weather_code[0]);
+
+document.getElementById("rain")
+.textContent=rain+"%";
+
+const outfit =
+chooseOutfit(
+temp,
+rain,
+style
+);
+
+document.getElementById("top")
+.textContent=outfit.top;
+
+document.getElementById("bottom")
+.textContent=outfit.bottom;
+
+document.getElementById("layer")
+.textContent=outfit.layer;
+
+document.getElementById("outfitReason")
+.textContent=
+"Built around today's weather and your selected style.";
+
+const shoes =
+chooseShoes(
+temp,
+rain,
+shoeBudget
+);
+
+document.getElementById("shoe")
+.textContent=shoes.shoe;
+
+document.getElementById("shoeColor")
+.textContent=shoes.color;
+
+document.getElementById("shoePrice")
+.textContent=shoes.price;
+
+const skin =
+skincareRoutine(
+skinType,
+skinBudget
+);
+
+document.getElementById("morningSkin")
+.textContent=skin.morning;
+
+document.getElementById("nightSkin")
+.textContent=skin.night;
+
+document.getElementById("skinPrice")
+.textContent=skin.budgetText;
+
+document.getElementById("dailyTip")
+.textContent=
+dailyTip(
+temp,
+rain,
+current.wind_speed_10m
+);
+
+document.getElementById("results")
+.classList.remove("hidden");
+
+document.getElementById("results")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+catch(err){
+
+error.textContent =
+err.message ||
+"Something went wrong.";
+
+}
+}
+
+function showPremiumMessage(){
+
+const toast =
+document.getElementById("toast");
+
+toast.style.display="block";
+
+setTimeout(()=>{
+toast.style.display="none";
+},3500);
+
+}
+
+</script>
+
+</body>
+</html>
